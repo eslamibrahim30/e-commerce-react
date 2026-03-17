@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
 const FALLBACK = "https://placehold.co/600x400";
 
 export default function ProductCard({ id, title, price, category, images }) {
     const imageUrl = images?.[0] || FALLBACK;
+    const dispatch = useDispatch();
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({ id, title, price, category, images }));
+    };
 
     return (
         <div className="group relative bg-card border border-border rounded-2xl overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
@@ -26,14 +33,22 @@ export default function ProductCard({ id, title, price, category, images }) {
 
                 <h2 className="font-semibold text-base leading-snug">{title}</h2>
 
-                <div className="mt-auto flex items-center justify-between pt-3 border-t border-border">
+                <div className="mt-auto flex items-center justify-between gap-2 pt-3 border-t border-border flex-wrap">
                     <span className="text-lg font-bold">${price.toFixed(2)}</span>
-                    <Link
-                        to={`/product/${id}`}
-                        className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
-                    >
-                        View Details →
-                    </Link>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={handleAddToCart}
+                            className="inline-flex items-center gap-1.5 bg-secondary text-secondary-foreground text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
+                        >
+                            🛒 Add to Cart
+                        </button>
+                        <Link
+                            to={`/product/${id}`}
+                            className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
+                        >
+                            View Details →
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
