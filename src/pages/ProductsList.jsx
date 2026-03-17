@@ -11,9 +11,6 @@ const isValidCategoryId = (id) => {
 };
 
 // Category name: English letters and spaces only (1–100 chars).
-// Every other character — quotes, punctuation, symbols, digits, encoded chars —
-// is rejected, which blocks SQLi, command injection, path traversal, template
-// injection, email headers, and all other payload types automatically.
 const SAFE_CATEGORY_NAME = /^[a-zA-Z ]{1,100}$/;
 
 // Validates a category object returned from the API.

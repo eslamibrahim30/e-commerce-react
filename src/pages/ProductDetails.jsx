@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 import { getProductById } from "../services/api";
 
 const FALLBACK = "https://placehold.co/600x400";
@@ -7,6 +9,7 @@ const FALLBACK = "https://placehold.co/600x400";
 export default function ProductDetails() {
 	const { id } = useParams();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const [product, setProduct] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -46,6 +49,12 @@ export default function ProductDetails() {
 	}
 
 	const mainImage = product.images?.[0] || FALLBACK;
+
+	const handleAddToCart = () => {
+		if (product) {
+			dispatch(addToCart(product));
+		}
+	};
 
 	return (
 		<div className="max-w-4xl mx-auto px-4 py-12">
@@ -101,13 +110,21 @@ export default function ProductDetails() {
 						</div>
 					</div>
 
-					{/* Back Button */}
-					<button
-						onClick={() => navigate("/")}
-						className="mt-auto flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground rounded-xl font-medium hover:opacity-90 transition-opacity cursor-pointer w-fit"
-					>
-						← Back to Home
-					</button>
+					{/* Actions */}
+					<div className="mt-auto flex flex-wrap items-center gap-3">
+						<button
+							onClick={handleAddToCart}
+							className="flex items-center gap-2 px-6 py-2.5 bg-secondary text-secondary-foreground rounded-xl font-medium hover:opacity-90 transition-opacity cursor-pointer"
+						>
+							🛒 Add to Cart
+						</button>
+						<button
+							onClick={() => navigate("/")}
+							className="flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground rounded-xl font-medium hover:opacity-90 transition-opacity cursor-pointer"
+						>
+							← Back to Home
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
