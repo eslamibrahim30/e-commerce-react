@@ -2,9 +2,11 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ShoppingCart02Icon } from "@hugeicons/core-free-icons";
 import { Home01Icon } from "@hugeicons/core-free-icons";
+import useThemeStore from "../store/useThemeStore";
 
 export default function MainLayout() {
 	const { pathname } = useLocation();
+	const { theme, toggleTheme } = useThemeStore();
 
 	const navLinks = [
 		{ to: "/", label: "Home", icon: <HugeiconsIcon icon={Home01Icon} size={18} /> },
@@ -22,7 +24,7 @@ export default function MainLayout() {
 						<span>E-Commerce</span>
 					</Link>
 
-					{/* Nav Links */}
+					{/* Nav Links + Theme Toggle */}
 					<nav className="flex items-center gap-1">
 						{navLinks.map(({ to, label, icon }) => {
 							const isActive = pathname === to;
@@ -40,6 +42,15 @@ export default function MainLayout() {
 								</Link>
 							);
 						})}
+
+						{/* Theme Toggle Button */}
+						<button
+							onClick={toggleTheme}
+							className="ml-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:text-foreground hover:bg-muted"
+							aria-label="Toggle theme"
+						>
+							{theme === "light" ? "🌙 Dark" : "☀️ Light"}
+						</button>
 					</nav>
 				</div>
 			</header>
