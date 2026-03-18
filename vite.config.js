@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [react(), tailwindcss()],
+	base: "/e-commerce-react/",
 	resolve: {
 		alias: {
 			'@': new URL('./src', import.meta.url).pathname,
