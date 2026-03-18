@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import useAuthStore from "@/store/useAuthStore";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +27,9 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
+  const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
+
   // 2. Initialize the Hook
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -37,6 +42,9 @@ export default function Login() {
   // 5. Form Submission
   const onSubmit = (values) => {
     console.log("Validated Form Data:", values);
+    // Simulate API Login
+    login("fake-jwt-token-123");
+    navigate("/");
   };
 
   return (
