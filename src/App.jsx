@@ -38,7 +38,9 @@ const router = createBrowserRouter([
 			},
 		],
 	},
-]);
+], {
+	basename: "/e-commerce-react"
+});
 
 export default function App() {
 	return <RouterProvider router={router} />;
