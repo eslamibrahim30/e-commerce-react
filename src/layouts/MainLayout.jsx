@@ -31,7 +31,7 @@ export default function MainLayout() {
 						<span className="bg-primary text-primary-foreground px-2 py-0.5 rounded-md text-sm">
 							{t[lang].brand}
 						</span>
-						<span>E-Commerce</span>
+						<span>{lang === "en" ? "Welcome" : "مرحبا"}</span>
 					</Link>
 
 					<nav className="flex items-center gap-1">
