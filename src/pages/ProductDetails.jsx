@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import { getProductById } from "../services/api";
+import useAuthStore from "../store/useAuthStore";
 
 const FALLBACK = "https://placehold.co/600x400";
 
@@ -10,6 +11,7 @@ export default function ProductDetails() {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const token = useAuthStore((state) => state.token);
 
 	const [product, setProduct] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -51,6 +53,10 @@ export default function ProductDetails() {
 	const mainImage = product.images?.[0] || FALLBACK;
 
 	const handleAddToCart = () => {
+		if (!token) {
+			navigate("/login");
+			return;
+		}
 		if (product) {
 			dispatch(addToCart(product));
 		}

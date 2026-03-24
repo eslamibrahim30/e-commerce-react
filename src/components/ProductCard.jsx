@@ -1,14 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
+import useAuthStore from "../store/useAuthStore";
 
 const FALLBACK = "https://placehold.co/600x400";
 
 export default function ProductCard({ id, title, price, category, images }) {
 	const imageUrl = images?.[0] || FALLBACK;
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const token = useAuthStore((state) => state.token);
 
 	const handleAddToCart = () => {
+		if (!token) {
+			navigate("/login");
+			return;
+		}
 		dispatch(addToCart({ id, title, price, category, images }));
 	};
 
